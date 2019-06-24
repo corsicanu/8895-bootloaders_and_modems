@@ -1,0 +1,95 @@
+sudo: required
+if: branch = master
+if: tag IS blank
+before_install:
+  - sudo apt-get update
+  - sudo apt-get install -y liblzma-dev liblz4-tool lzop liblz4-dev
+  - rm -rf corsicanu/8895-bl_modem
+script: 
+  - export home_dir=$(pwd)
+  - export latest=$(cat README.md | grep G950F)
+  - cd G950F
+  - mkdir -p twrp/META-INF && cp -r META-INF/* twrp/META-INF
+  - tar -xvf BL_*.md5 && tar -xvf CP_*.md5
+  - lz4cat cm.bin.lz4 > twrp/cm.bin
+  - lz4cat sboot.bin.lz4 > twrp/sboot.bin
+  - lz4cat up_param.bin.lz4 > twrp/up_param.bin
+  - lz4cat modem.bin.lz4 > twrp/modem.bin
+  - zip -r -9 - *.tar.md5 > $HOME/$latest-odin_flashable.zip
+  - cd twrp && zip -r -9 - * > $HOME/$latest-twrp_flashable.zip
+  - cd $home_dir
+  - export latest=$(cat README.md | grep G955F)
+  - cd G955F
+  - mkdir -p twrp/META-INF && cp -r META-INF/* twrp/META-INF
+  - tar -xvf BL_*.md5 && tar -xvf CP_*.md5
+  - lz4cat cm.bin.lz4 > twrp/cm.bin
+  - lz4cat sboot.bin.lz4 > twrp/sboot.bin
+  - lz4cat up_param.bin.lz4 > twrp/up_param.bin
+  - lz4cat modem.bin.lz4 > twrp/modem.bin
+  - zip -r -9 - *.tar.md5 > $HOME/$latest-odin_flashable.zip
+  - cd twrp && zip -r -9 - * > $HOME/$latest-twrp_flashable.zip
+  - cd $home_dir
+  - export latest=$(cat README.md | grep N950F)
+  - cd N950F
+  - mkdir -p twrp/META-INF && cp -r META-INF/* twrp/META-INF
+  - tar -xvf BL_*.md5 && tar -xvf CP_*.md5
+  - lz4cat cm.bin.lz4 > twrp/cm.bin
+  - lz4cat sboot.bin.lz4 > twrp/sboot.bin
+  - lz4cat up_param.bin.lz4 > twrp/up_param.bin
+  - lz4cat modem.bin.lz4 > twrp/modem.bin
+  - zip -r -9 - *.tar.md5 > $HOME/$latest-odin_flashable.zip
+  - cd twrp && zip -r -9 - * > $HOME/$latest-twrp_flashable.zip
+  - cd $home_dir
+  - export latest=$(cat README.md | grep G950N)
+  - cd G950N
+  - mkdir -p twrp/META-INF && cp -r META-INF/* twrp/META-INF
+  - tar -xvf BL_*.md5 && tar -xvf CP_*.md5
+  - lz4cat cm.bin.lz4 > twrp/cm.bin
+  - lz4cat sboot.bin.lz4 > twrp/sboot.bin
+  - lz4cat up_param.bin.lz4 > twrp/up_param.bin
+  - lz4cat modem.bin.lz4 > twrp/modem.bin
+  - zip -r -9 - *.tar.md5 > $HOME/$latest-odin_flashable.zip
+  - cd twrp && zip -r -9 - * > $HOME/$latest-twrp_flashable.zip
+  - cd $home_dir
+  - export latest=$(cat README.md | grep G955N)
+  - cd G955N
+  - mkdir -p twrp/META-INF && cp -r META-INF/* twrp/META-INF
+  - tar -xvf BL_*.md5 && tar -xvf CP_*.md5
+  - lz4cat cm.bin.lz4 > twrp/cm.bin
+  - lz4cat sboot.bin.lz4 > twrp/sboot.bin
+  - lz4cat up_param.bin.lz4 > twrp/up_param.bin
+  - lz4cat modem.bin.lz4 > twrp/modem.bin
+  - zip -r -9 - *.tar.md5 > $HOME/$latest-odin_flashable.zip
+  - cd twrp && zip -r -9 - * > $HOME/$latest-twrp_flashable.zip
+  - cd $home_dir
+  - export latest=$(cat README.md | grep N950N)
+  - cd N950N
+  - mkdir -p twrp/META-INF && cp -r META-INF/* twrp/META-INF
+  - tar -xvf BL_*.md5 && tar -xvf CP_*.md5
+  - lz4cat cm.bin.lz4 > twrp/cm.bin
+  - lz4cat sboot.bin.lz4 > twrp/sboot.bin
+  - lz4cat up_param.bin.lz4 > twrp/up_param.bin
+  - lz4cat modem.bin.lz4 > twrp/modem.bin
+  - zip -r -9 - *.tar.md5 > $HOME/$latest-odin_flashable.zip
+  - cd twrp && zip -r -9 - * > $HOME/$latest-twrp_flashable.zip
+  - cd $home_dir
+after_success:
+  - log=$(git log $TRAVIS_COMMIT_RANGE --oneline)
+  - export TAG=$'v'$(date +'%Y%m%d%H%M%S')
+  - export BODY=$'**Changelog:**<br/>'${log//$'\n'/<br/>}
+  - export NAME="Modems and bootloaders - $(date +'%d.%m.%Y-%H:%M:%S')"
+deploy:
+  skip_cleanup: true
+  provider: releases
+  api_key: "$GIT_OAUTH_TOKEN_TB"
+  name: $NAME
+  tag_name: $TAG
+  body: $BODY
+  file_glob: true
+  file: "$HOME/*.zip"
+  on:
+    repo: corsicanu/8895-bl_modem
+    branch: master
+branches:
+  except:
+    - /^v\d/
