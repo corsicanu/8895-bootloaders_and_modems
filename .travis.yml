@@ -6,6 +6,8 @@ before_install:
   - sudo apt-get install -y liblzma-dev liblz4-tool lzop liblz4-dev
   - rm -rf corsicanu/8895-bl_modem
 script: 
+  - cp Odin3_v3.13.3.zip $HOME/Odin3_v3.13.3.zip
+  - cp SAMSUNG_USB_Driver_for_Mobile_Phones.zip $HOME/SAMSUNG_USB_Driver_for_Mobile_Phones.zip
   - export home_dir=$(pwd)
   - export latest=$(cat README.md | grep G950F)
   - cd G950F
