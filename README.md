@@ -28,7 +28,7 @@ All the files here are pulled from official firmwares of the devices mentioned.
 ## Latest releases:
 ```
 G950FXXS6DSL2
-G955FXXS5DSJ1
+G955FXXS6DSL2
 N950FXXU7DSJ1
 G950NKSU3DSG5
 G955NKSU3DSG5
