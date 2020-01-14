@@ -13,10 +13,10 @@ script:
   - cd G950F
   - mkdir -p twrp/META-INF && cp -r META-INF/* twrp/META-INF
   - tar -xvf BL_*.md5 && tar -xvf CP_*.md5
-  - lz4cat cm.bin.lz4 > twrp/cm.bin
-  - lz4cat sboot.bin.lz4 > twrp/sboot.bin
-  - lz4cat up_param.bin.lz4 > twrp/up_param.bin
-  - lz4cat modem.bin.lz4 > twrp/modem.bin
+  - if [ -e cm.bin.lz4 ]; then lz4cat cm.bin.lz4 > twrp/cm.bin; elif [ -e cm.bin ]; then cat cm.bin > twrp/cm.bin; fi
+  - if [ -e sboot.bin.lz4 ]; then lz4cat sboot.bin.lz4 > twrp/sboot.bin; elif [ -e sboot.bin ]; then cat sboot.bin > twrp/sboot.bin; fi
+  - if [ -e up_param.bin.lz4 ]; then lz4cat up_param.bin.lz4 > twrp/up_param.bin; elif [ -e up_param.bin ]; then cat up_param.bin > twrp/modem.bin; fi
+  - if [ -e modem.bin.lz4 ]; then lz4cat modem.bin.lz4 > twrp/modem.bin; elif [ -e modem.bin ]; then cat modem.bin > twrp/modem.bin; fi
   - zip -r -9 - *.tar.md5 > $HOME/$latest-odin_flashable.zip
   - cd twrp && zip -r -9 - * > $HOME/$latest-twrp_flashable.zip
   - cd $home_dir
@@ -24,10 +24,10 @@ script:
   - cd G955F
   - mkdir -p twrp/META-INF && cp -r META-INF/* twrp/META-INF
   - tar -xvf BL_*.md5 && tar -xvf CP_*.md5
-  - lz4cat cm.bin.lz4 > twrp/cm.bin
-  - lz4cat sboot.bin.lz4 > twrp/sboot.bin
-  - lz4cat up_param.bin.lz4 > twrp/up_param.bin
-  - lz4cat modem.bin.lz4 > twrp/modem.bin
+  - if [ -e cm.bin.lz4 ]; then lz4cat cm.bin.lz4 > twrp/cm.bin; elif [ -e cm.bin ]; then cat cm.bin > twrp/cm.bin; fi
+  - if [ -e sboot.bin.lz4 ]; then lz4cat sboot.bin.lz4 > twrp/sboot.bin; elif [ -e sboot.bin ]; then cat sboot.bin > twrp/sboot.bin; fi
+  - if [ -e up_param.bin.lz4 ]; then lz4cat up_param.bin.lz4 > twrp/up_param.bin; elif [ -e up_param.bin ]; then cat up_param.bin > twrp/modem.bin; fi
+  - if [ -e modem.bin.lz4 ]; then lz4cat modem.bin.lz4 > twrp/modem.bin; elif [ -e modem.bin ]; then cat modem.bin > twrp/modem.bin; fi
   - zip -r -9 - *.tar.md5 > $HOME/$latest-odin_flashable.zip
   - cd twrp && zip -r -9 - * > $HOME/$latest-twrp_flashable.zip
   - cd $home_dir
@@ -35,10 +35,10 @@ script:
   - cd N950F
   - mkdir -p twrp/META-INF && cp -r META-INF/* twrp/META-INF
   - tar -xvf BL_*.md5 && tar -xvf CP_*.md5
-  - lz4cat cm.bin.lz4 > twrp/cm.bin
-  - lz4cat sboot.bin.lz4 > twrp/sboot.bin
-  - lz4cat up_param.bin.lz4 > twrp/up_param.bin
-  - lz4cat modem.bin.lz4 > twrp/modem.bin
+  - if [ -e cm.bin.lz4 ]; then lz4cat cm.bin.lz4 > twrp/cm.bin; elif [ -e cm.bin ]; then cat cm.bin > twrp/cm.bin; fi
+  - if [ -e sboot.bin.lz4 ]; then lz4cat sboot.bin.lz4 > twrp/sboot.bin; elif [ -e sboot.bin ]; then cat sboot.bin > twrp/sboot.bin; fi
+  - if [ -e up_param.bin.lz4 ]; then lz4cat up_param.bin.lz4 > twrp/up_param.bin; elif [ -e up_param.bin ]; then cat up_param.bin > twrp/modem.bin; fi
+  - if [ -e modem.bin.lz4 ]; then lz4cat modem.bin.lz4 > twrp/modem.bin; elif [ -e modem.bin ]; then cat modem.bin > twrp/modem.bin; fi
   - zip -r -9 - *.tar.md5 > $HOME/$latest-odin_flashable.zip
   - cd twrp && zip -r -9 - * > $HOME/$latest-twrp_flashable.zip
   - cd $home_dir
@@ -46,10 +46,10 @@ script:
   - cd G950N
   - mkdir -p twrp/META-INF && cp -r META-INF/* twrp/META-INF
   - tar -xvf BL_*.md5 && tar -xvf CP_*.md5
-  - lz4cat cm.bin.lz4 > twrp/cm.bin
-  - lz4cat sboot.bin.lz4 > twrp/sboot.bin
-  - lz4cat up_param.bin.lz4 > twrp/up_param.bin
-  - lz4cat modem.bin.lz4 > twrp/modem.bin
+  - if [ -e cm.bin.lz4 ]; then lz4cat cm.bin.lz4 > twrp/cm.bin; elif [ -e cm.bin ]; then cat cm.bin > twrp/cm.bin; fi
+  - if [ -e sboot.bin.lz4 ]; then lz4cat sboot.bin.lz4 > twrp/sboot.bin; elif [ -e sboot.bin ]; then cat sboot.bin > twrp/sboot.bin; fi
+  - if [ -e up_param.bin.lz4 ]; then lz4cat up_param.bin.lz4 > twrp/up_param.bin; elif [ -e up_param.bin ]; then cat up_param.bin > twrp/modem.bin; fi
+  - if [ -e modem.bin.lz4 ]; then lz4cat modem.bin.lz4 > twrp/modem.bin; elif [ -e modem.bin ]; then cat modem.bin > twrp/modem.bin; fi
   - zip -r -9 - *.tar.md5 > $HOME/$latest-odin_flashable.zip
   - cd twrp && zip -r -9 - * > $HOME/$latest-twrp_flashable.zip
   - cd $home_dir
@@ -57,10 +57,10 @@ script:
   - cd G955N
   - mkdir -p twrp/META-INF && cp -r META-INF/* twrp/META-INF
   - tar -xvf BL_*.md5 && tar -xvf CP_*.md5
-  - lz4cat cm.bin.lz4 > twrp/cm.bin
-  - lz4cat sboot.bin.lz4 > twrp/sboot.bin
-  - lz4cat up_param.bin.lz4 > twrp/up_param.bin
-  - lz4cat modem.bin.lz4 > twrp/modem.bin
+  - if [ -e cm.bin.lz4 ]; then lz4cat cm.bin.lz4 > twrp/cm.bin; elif [ -e cm.bin ]; then cat cm.bin > twrp/cm.bin; fi
+  - if [ -e sboot.bin.lz4 ]; then lz4cat sboot.bin.lz4 > twrp/sboot.bin; elif [ -e sboot.bin ]; then cat sboot.bin > twrp/sboot.bin; fi
+  - if [ -e up_param.bin.lz4 ]; then lz4cat up_param.bin.lz4 > twrp/up_param.bin; elif [ -e up_param.bin ]; then cat up_param.bin > twrp/modem.bin; fi
+  - if [ -e modem.bin.lz4 ]; then lz4cat modem.bin.lz4 > twrp/modem.bin; elif [ -e modem.bin ]; then cat modem.bin > twrp/modem.bin; fi
   - zip -r -9 - *.tar.md5 > $HOME/$latest-odin_flashable.zip
   - cd twrp && zip -r -9 - * > $HOME/$latest-twrp_flashable.zip
   - cd $home_dir
@@ -68,10 +68,10 @@ script:
   - cd N950N
   - mkdir -p twrp/META-INF && cp -r META-INF/* twrp/META-INF
   - tar -xvf BL_*.md5 && tar -xvf CP_*.md5
-  - lz4cat cm.bin.lz4 > twrp/cm.bin
-  - lz4cat sboot.bin.lz4 > twrp/sboot.bin
-  - lz4cat up_param.bin.lz4 > twrp/up_param.bin
-  - lz4cat modem.bin.lz4 > twrp/modem.bin
+  - if [ -e cm.bin.lz4 ]; then lz4cat cm.bin.lz4 > twrp/cm.bin; elif [ -e cm.bin ]; then cat cm.bin > twrp/cm.bin; fi
+  - if [ -e sboot.bin.lz4 ]; then lz4cat sboot.bin.lz4 > twrp/sboot.bin; elif [ -e sboot.bin ]; then cat sboot.bin > twrp/sboot.bin; fi
+  - if [ -e up_param.bin.lz4 ]; then lz4cat up_param.bin.lz4 > twrp/up_param.bin; elif [ -e up_param.bin ]; then cat up_param.bin > twrp/modem.bin; fi
+  - if [ -e modem.bin.lz4 ]; then lz4cat modem.bin.lz4 > twrp/modem.bin; elif [ -e modem.bin ]; then cat modem.bin > twrp/modem.bin; fi
   - zip -r -9 - *.tar.md5 > $HOME/$latest-odin_flashable.zip
   - cd twrp && zip -r -9 - * > $HOME/$latest-twrp_flashable.zip
   - cd $home_dir
