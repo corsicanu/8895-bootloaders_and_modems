@@ -29,7 +29,7 @@ All the files here are pulled from official firmwares of the devices mentioned.
 ```
 G950FXXS7DTA6
 G955FXXS7DTA6
-N950FXXS8DSK5
+N950FXXS9DTA1
 G950NKSU3DSG5
 G955NKSU3DSG5
 N950NKSU5DSI1
