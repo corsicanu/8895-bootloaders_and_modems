@@ -30,9 +30,9 @@ All the files here are pulled from official firmwares of the devices mentioned.
 G950FXXS8DTC6
 G955FXXS8DTC6
 N950FXXSADTC4
-G950NKSU3DSG5
-G955NKSU3DSG5
-N950NKSU5DSI1
+G950NKSU4DTD1
+G955NKSU4DTD1
+N950NKSU5DTD2
 ```
 
 ## Instructions:
