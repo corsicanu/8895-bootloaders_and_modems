@@ -34,7 +34,7 @@ All the files here are pulled from official firmwares of the devices mentioned.
 **2. Update via Odin:**
    - Download [Odin v3.14.1](https://downloads.corsicanu.ro/samsung/Odin3_v3.14.1.zip)
    - Download and install [Samsung Drivers](https://downloads.corsicanu.ro/samsung/SAMSUNG_USB_Driver_for_Mobile_Phones.zip)
-   - Download **\*\-odin\_flashable\.tar** from [releases](https://github.com/corsicanu/9820-bootloaders_and_modems/releases)
+   - Download **\*\-odin\_flashable\.tar** from [releases](https://github.com/corsicanu/8895-bootloaders_and_modems/releases)
    - Switch off the phone
    - Use Volume Down+Bixby+Power to enter Download Mode
    - Open Odin and make sure that your device is detected
