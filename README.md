@@ -1,5 +1,5 @@
 # Modem and bootloader repository 
-**for Samsung Galaxy S8(+)/Note8 Exynos variants (including korean)**
+**for Samsung Galaxy S8(+)/Note8 Exynos variants (including korean N)**
 
 ### Do note this is not a way to downgrade revision of modem and bootloader.
 
@@ -25,28 +25,19 @@ involved in this for your failures, you are the only one choosing to mess up wit
 All the files here are pulled from official firmwares of the devices mentioned.
 ```
 
-## Latest releases:
-```
-G950FXXS8DTC6
-G955FXXS8DTC6
-N950FXXSADTC4
-G950NKSU4DTD1
-G955NKSU4DTD1
-N950NKSU5DTD2
-```
-
 ## Instructions:
 **1. Update via TWRP:**
-   - Download **\*\_twrp\_flashable\.zip** from [releases](https://github.com/corsicanu/8895-bootloaders_and_modems/releases)
+   - Download **\*\-twrp\_flashable\.zip** from [releases](https://github.com/corsicanu/8895-bootloaders_and_modems/releases)
    - Boot phone in TWRP
    - Flash the downloaded zip as any other
 
 **2. Update via Odin:**
-   - Download Odin v3.13.1
-   - Download and install Samsung Drivers (if you have them installed you can skip this step)
-   - Download **\*\_odin\_flashable\.zip** from [releases](https://github.com/corsicanu/8895-bootloaders_and_modems/releases) and unpack it
+   - Download [Odin v3.14.1](https://downloads.corsicanu.ro/samsung/Odin3_v3.14.1.zip)
+   - Download and install [Samsung Drivers](https://downloads.corsicanu.ro/samsung/SAMSUNG_USB_Driver_for_Mobile_Phones.zip)
+   - Download **\*\-odin\_flashable\.tar** from [releases](https://github.com/corsicanu/9820-bootloaders_and_modems/releases)
    - Switch off the phone
    - Use Volume Down+Bixby+Power to enter Download Mode
    - Open Odin and make sure that your device is detected
-   - Put **BL\*.tar** file into BL tab and **CP\*.tar** file into CP tab
+   - Put **\*\-odin\_flashable\.tar** file into BL tab
    - Click Start and wait for the device to reboot
+

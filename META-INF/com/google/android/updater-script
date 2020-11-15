@@ -1,0 +1,27 @@
+assert(is_substring("target_device", getprop("ro.boot.bootloader")) || abort("Error: This package is only for target_device device, aborting..."););
+ui_print(" ");
+ui_print(" ");
+ui_print("target_version Modem and bootloader flasher");
+ui_print(" by corsicanu@xda-developers.com");
+ui_print(" ");
+ui_print(" - checking device info...");
+run_program("/sbin/sleep","1");
+
+ui_print(" - updating bootloader files..");
+assert(package_extract_file("sboot.bin", "/dev/block/platform/11120000.ufs/by-name/BOTA0"));
+run_program("/sbin/sleep","1");
+assert(package_extract_file("cm.bin", "/dev/block/platform/11120000.ufs/by-name/BOTA1"));
+run_program("/sbin/sleep","1");
+assert(package_extract_file("up_param.bin", "/dev/block/platform/11120000.ufs/by-name/BOTA2"));
+run_program("/sbin/sleep","1");
+ui_print(" - updating modem..");
+assert(package_extract_file("modem.bin", "/dev/block/platform/11120000.ufs/by-name/RADIO"));
+run_program("/sbin/sleep","1");
+ui_print(" ");
+ui_print(" ");
+ui_print(" !!! WARNING !!!");
+ui_print("Your phone will reboot now to finish the process.");
+ui_print(" ");
+run_program("/sbin/sleep","5");
+run_program("/sbin/reboot", "fota_bl");
+set_progress(1.000000);

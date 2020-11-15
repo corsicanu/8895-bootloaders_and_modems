@@ -1,0 +1,156 @@
+name: Check firmware update
+
+on:
+  schedule:
+    - cron: "0 */6 * * *"
+  push:
+
+jobs:
+  update:
+    runs-on: ubuntu-20.04
+
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - model: "SM-G950N"
+            region: "KTC"
+          - model: "SM-G955N"
+            region: "KTC"
+          - model: "SM-N950N"
+            region: "KTC"
+          - model: "SM-G955F"
+            region: "DBT"
+          - model: "SM-G950F"
+            region: "DBT"
+          - model: "SM-N950F"
+            region: "DBT"
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+        with:
+          submodules: true
+
+      - name: Compare latest version with current version
+        id: check
+        run: |
+          need_update=0
+          latest=`curl --retry 5 --retry-delay 5 http://fota-cloud-dn.ospserver.net/firmware/${{ matrix.region }}/${{ matrix.model }}/version.xml | grep latest | sed 's/^[^>]*>//' | sed 's/<.*//'`
+          latest_short=`echo $latest | cut -d'/' -f1`
+          latest_csc=`echo $latest | cut -d'/' -f2`
+          latest_modem=`echo $latest | cut -d'/' -f3`
+          current=`cat current.${{ matrix.model }}` || need_update=1
+          [[ $latest != $current ]] && need_update=1
+          echo ::set-output name=latest_version::$latest
+          echo ::set-output name=latest_shortversion::$latest_short
+          echo ::set-output name=latest_cscversion::$latest_csc
+          echo ::set-output name=latest_modemversion::$latest_modem
+          echo ::set-output name=need_update::$need_update
+
+      - name: Use Node.js 15
+        if: steps.check.outputs.need_update == 1
+        uses: actions/setup-node@v1
+        with:
+          node-version: 15
+
+      - name: Install dependencies
+        if: steps.check.outputs.need_update == 1
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y liblz4-tool zip
+          sudo npm i -g samfirm
+
+      - name: Fetch firmware
+        if: steps.check.outputs.need_update == 1
+        run: samfirm -m ${{ matrix.model }} -r ${{ matrix.region }}
+
+      - name: Print directory structure
+        if: steps.check.outputs.need_update == 1
+        run: ls -la ${{ matrix.model }}_${{ matrix.region }}
+
+      - name: Get path of files
+        if: steps.check.outputs.need_update == 1
+        id: files
+        run: |
+          echo ::set-output name=bl::`find -name BL*`
+          echo ::set-output name=ap::`find -name AP*`
+          echo ::set-output name=cp::`find -name CP*`
+          echo ::set-output name=csc::`find -name HOME_CSC*`
+
+      - name: Check downloaded firmware version
+        if: steps.check.outputs.need_update == 1
+        run: |
+          version_short=`echo ${{ steps.files.outputs.ap }} | cut -d'_' -f3`
+          version_csc=`echo ${{ steps.files.outputs.csc }} | cut -d'_' -f5`
+          version_modem=`echo ${{ steps.files.outputs.cp }} | cut -d'_' -f3`
+          [[ $version_short == ${{ steps.check.outputs.latest_shortversion }} ]]
+          [[ $version_csc == ${{ steps.check.outputs.latest_cscversion }} ]]
+          [[ $version_modem == ${{ steps.check.outputs.latest_modemversion }} ]]
+          echo PDA version: $version_short > versions.txt
+          echo CSC version: $version_csc >> versions.txt
+          echo Modem version: $version_modem >> versions.txt
+
+      - name: Print available disk space
+        if: steps.check.outputs.need_update == 1
+        run: |
+          pwd
+          sudo df -h
+          
+      - name: Create zip environment
+        if: steps.check.outputs.need_update == 1
+        run: |
+          target_device=`echo ${{ matrix.model }} | cut -d'-' -f2`
+          target_version=${{ steps.check.outputs.latest_shortversion }}
+          mkdir -p $target_version
+          cp -r META-INF $target_version
+          sed -i "s/target_device/$target_device/g" $target_version/META-INF/com/google/android/updater-script
+          sed -i "s/target_version/$target_version/g" $target_version/META-INF/com/google/android/updater-script
+          
+      - name: Extract images from AP/BL and create zip
+        if: steps.check.outputs.need_update == 1
+        id: releases
+        run: |
+          target_version=${{ steps.check.outputs.latest_shortversion }}
+          bls=(cm.bin modem.bin sboot.bin up_param.bin)
+          tar xvf ${{ steps.files.outputs.bl }} 
+          tar xvf ${{ steps.files.outputs.cp }}
+          for i in `ls | grep lz4`; do lz4 -dm $i ; rm -rf $i; done
+          for i in ${bls[@]}; do [[ -e $i ]] && mv $i $target_version/$i; done
+          cd $target_version
+          zip -r ../$target_version-twrp_flashable.zip *
+          rm -rf META-INF
+          tar cvf ../$target_version-odin_flashable.tar *
+          cd ..
+          echo ::set-output name=zip::`find -name $target_version-twrp_flashable.zip`
+          echo ::set-output name=tar::`find -name $target_version-odin_flashable.tar`
+
+      - name: Update current version
+        if: steps.check.outputs.need_update == 1
+        run: |
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git pull origin ${{github.ref}} --ff-only
+          echo ${{ steps.check.outputs.latest_version }} > current.${{ matrix.model }}
+          git add current.${{ matrix.model }}
+          git commit -m "${{ matrix.model }}: ${{ steps.check.outputs.latest_version }}"
+          git tag ${{ steps.check.outputs.latest_shortversion }}
+
+      - name: Push changes to repo
+        if: steps.check.outputs.need_update == 1
+        uses: ad-m/github-push-action@master
+        with:
+          tags: true
+          github_token: ${{ secrets.TOKEN }}
+
+      - name: Upload release assets
+        if: steps.check.outputs.need_update == 1
+        uses: softprops/action-gh-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.TOKEN }}
+        with:
+          body_path: versions.txt
+          tag_name: ${{ steps.check.outputs.latest_shortversion }}
+          files: |
+            ${{ steps.releases.outputs.zip }}
+            ${{ steps.releases.outputs.tar }}
