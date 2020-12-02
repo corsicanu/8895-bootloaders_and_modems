@@ -7,7 +7,7 @@ on:
 
 jobs:
   update:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-18.04
 
     strategy:
       fail-fast: false
@@ -78,12 +78,14 @@ jobs:
           version_short=`echo ${{ steps.files.outputs.ap }} | cut -d'_' -f3`
           version_csc=`echo ${{ steps.files.outputs.csc }} | cut -d'_' -f5`
           version_modem=`echo ${{ steps.files.outputs.cp }} | cut -d'_' -f3`
+          changelist=`echo ${{ steps.files.outputs.ap }} | cut -d'_' -f4`
           [[ $version_short == ${{ steps.check.outputs.latest_shortversion }} ]]
           [[ $version_csc == ${{ steps.check.outputs.latest_cscversion }} ]]
           [[ $version_modem == ${{ steps.check.outputs.latest_modemversion }} ]]
           echo PDA version: $version_short > versions.txt
           echo CSC version: $version_csc >> versions.txt
           echo Modem version: $version_modem >> versions.txt
+          echo Changelist: $changelist >> versions.txt
 
       - name: Print available disk space
         if: steps.check.outputs.need_update == 1
