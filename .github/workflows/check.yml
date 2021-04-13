@@ -2,7 +2,7 @@ name: Check firmware update
 
 on:
   schedule:
-    - cron: "0 */6 * * *"
+    - cron: "0 0 * * *"
   push:
 
 jobs:
@@ -24,7 +24,7 @@ jobs:
           - model: "SM-G950F"
             region: "DBT"
           - model: "SM-N950F"
-            region: "DBT"
+            region: "COO"
 
     steps:
       - name: Checkout repo
