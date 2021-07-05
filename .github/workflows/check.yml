@@ -24,7 +24,7 @@ jobs:
           - model: "SM-G950F"
             region: "DBT"
           - model: "SM-N950F"
-            region: "COO"
+            region: "DBT"
 
     steps:
       - name: Checkout repo
