@@ -1,13 +1,12 @@
 name: Check firmware update
 
 on:
-  schedule:
-    - cron: "0 0 * * *"
+  workflow_dispatch:
   push:
 
 jobs:
   update:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
 
     strategy:
       fail-fast: false
@@ -20,11 +19,11 @@ jobs:
           - model: "SM-N950N"
             region: "KTC"
           - model: "SM-G955F"
-            region: "FTM"
+            region: "XEO"
           - model: "SM-G950F"
-            region: "FTM"
+            region: "XEO"
           - model: "SM-N950F"
-            region: "DBT"
+            region: "INS"
 
     steps:
       - name: Checkout repo
