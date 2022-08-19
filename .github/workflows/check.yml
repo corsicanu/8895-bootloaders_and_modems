@@ -19,9 +19,9 @@ jobs:
           - model: "SM-N950N"
             region: "KTC"
           - model: "SM-G955F"
-            region: "XEO"
+            region: "DBT"
           - model: "SM-G950F"
-            region: "XEO"
+            region: "DBT"
           - model: "SM-N950F"
             region: "INS"
 
